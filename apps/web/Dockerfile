@@ -17,6 +17,7 @@ WORKDIR ${ROOT}
 
 # Install pnpm.
 RUN --mount=type=cache,target=/root/.npm \
+    npm config set registry https://registry.npm.taobao.org/ \
     npm install -g pnpm@${PNPM_VERSION}
 
 FROM base as build
