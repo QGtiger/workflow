@@ -20,12 +20,12 @@ RUN npm install -g pnpm@${PNPM_VERSION}
 
 FROM base as build
 
+# Copy the rest of the source files into the image.
+COPY . .
+
 # Download additional development dependencies before building, as some projects require
 # "devDependencies" to be installed to build. If you don't need this, remove this step.
 RUN pnpm install --frozen-lockfile
-
-# Copy the rest of the source files into the image.
-COPY . .
 
 # Run the build script.
 RUN pnpm run build --filter=web
