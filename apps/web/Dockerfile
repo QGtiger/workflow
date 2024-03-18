@@ -16,18 +16,13 @@ FROM node:${NODE_VERSION}-alpine as base
 WORKDIR ${ROOT}
 
 # Install pnpm.
-RUN --mount=type=cache,target=/root/.npm \
-    npm config set registry https://registry.npm.taobao.org/ && \
-    npm install -g pnpm@${PNPM_VERSION}
+RUN npm install -g pnpm@${PNPM_VERSION}
 
 FROM base as build
 
 # Download additional development dependencies before building, as some projects require
 # "devDependencies" to be installed to build. If you don't need this, remove this step.
-RUN --mount=type=bind,source=package.json,target=package.json \
-    --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
-    --mount=type=cache,target=/root/.local/share/pnpm/store \
-    pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile
 
 # Copy the rest of the source files into the image.
 COPY . .
