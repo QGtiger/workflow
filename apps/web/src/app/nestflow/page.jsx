@@ -1,5 +1,4 @@
 "use client";
-/* eslint-disable import/no-extraneous-dependencies -- 导出错误 */
 
 import { useCallback } from "react";
 import ReactFlow, {
@@ -94,7 +93,7 @@ const initialEdges = [
 ];
 
 export default function NestedFlow() {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [nodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
   const onConnect = useCallback((connection) => {
