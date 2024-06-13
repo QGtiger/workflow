@@ -138,7 +138,14 @@ const router = createBrowserRouter(routes);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <ErrorBoundary FallbackComponent={FallbackComponent}>
-    <ConfigProvider prefixCls="web-workflow" theme={{}}>
+    <ConfigProvider
+      prefixCls="web-workflow"
+      theme={{
+        token: {
+          colorPrimary: "#4e46dc",
+        },
+      }}
+    >
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
         <ReactQueryDevtools />
