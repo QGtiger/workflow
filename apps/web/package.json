@@ -10,8 +10,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.45.0",
+    "@tanstack/react-query-devtools": "^5.45.0",
+    "ahooks": "^3.8.0",
+    "antd": "^5.18.1",
+    "axios": "^1.7.2",
+    "classnames": "^2.5.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-error-boundary": "^4.0.13",
+    "react-router-dom": "^6.23.1",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
