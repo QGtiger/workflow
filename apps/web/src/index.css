@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+@font-face {
+  font-family: "iconfont"; /* Project id 4584313 */
+  src:
+    url("data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAVEAAwAAAAACogAAAT2AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAImwjKgZgADwKjFCJJwE2AiQDaAs2AAQgBYF8ByAb1gfIjpSuxmQG/27ZvCRIDA1hFVhTC3S3JpK0TtpT5FTh7MtFU7PFV8tpdylN3SCRdImQDELh5D6tL5ByfFpvMhMjoyJ7U5EZhIupOX1uBxwoEP6ifQEAAWADIEEGBbizaZjBADDJXjMILD5akUUOeRRUEXSv6tjBwAETnCBwAXDDDAmABwxkMPCCQsq4actI4blGMNQ6w0xrAaw33WfAE+aeb+DbUWAYkHPeCxnqImolgDH/PGQlakgNRBBx4CvjE+N9eBCBL07RqqECtAr3NRAAoEA9ByCAhArQO07TNeMlMCgEdp0kUHp3GAbgdxgfpez5REU6DZnakZi8cEm3n9opQFhTeIwN6LVck2EUKElohILVqkYLAucLZMqpkE45inr27Z6nvSEEr78moL4quPDrvET/MtFC5sJgqDV7LKpOkS5/t0xL8vqNUG/gwollepJoCS58A9Qbc/Qo1AgXjhEtPk/zxj3Jy6WIHJunx4kW48IR6on6daggqKs0Pty5rNyYvqLfXqvqrpTCcswb3xaVClOjJPNzI2lOL84/7i1Ij/O6JzUvuk33xuW0Et0ak/PT+s2UUnIjUsRTlIKxUW9BXrS4sIPWDw2KLeuintFSmbPV7Xpqr3I8+sR19Bs5V7/++jZt3OjODrJtu03r0u44zKZQ2iuH+IlF2gO8fh/Ue7nw/ev0V4j2Mg29CPWlmYJxRHtg37U3xxfL0euvT6ZffNm+w/Xfl5thwsnkvPpPtB/xt73SjpMZnRWbQsFNFR2dmvxKxabONITMnR0QuhT3+rq3VE5PV23t6mJiimV311YLK7GScFnn6o715VNK+fr2dk0+caGjnaWilKUJSQUjkfO5mCUKityEAC/0PGif5bDYHfb/uPc4/hGeew9fniccjUYjAh/F6GP4Zzf/P48Uh5a4zSZK4g58wYpiCn793ZqworzbjMuw5WtzUFF6zJYe99IgDrxpudFqSVisF3H9hTtN/JlO2kURFzofzJ+1csISWrbsvvv0/13undjZJxds/vWdequ1/p1fN8O3ytx9XUlr766W5isevXOuIMy989HbmltO9I6mx2LXnj5d9dyHVdlVtHJhNuWuzP2fZt3f11bSruwLFSYruwq+hqvnKbVbug/jd1PrytoHf1yqjDiVnJHW2rkb5sgbWmagF3M/cLz16Pc89z2u4WwuUXTZxGyRbA9b77Ziono4GI88XRE8p23DhrZzggsnruiujzwyGJ0Zbz65cuXJ5vEiGLN/yM42yPcHTK7L683L64Gay2pzr/Ynff6E33c3zbgH8vnC9GOp8Sd8rj8Ch/8L5+f+jsafrnXucjognDsdN6FF2+F+RpKecUvurEkx2ybmiDZ4Z4N7T3CKFkGcCeQjFUABRlE3/V8Bi//6h3gFgAre+J4upF4AMXk3JX794IdF9tbfrDRz6f74nBW/83je+Ij+kvZzljJYGRhNZlADd6624mZP4XDtlQxwigE0BiRXg8+Mr+BjM/ky5ONWXI+34y3QyNRpwDEz2QFg/AmoZPpswAkreKTJTINtoJBroFeISLpixng4gWFB4ChRPpKC7RaBi0Y9fC4GAYRcJqRh+0tmBHAW1mAZNmEjVro/2w4FK7AKO7AeS7AVVShHpextwTgmdLIvXLP9XmW3NesCBZLTqf6t2IY12BmYYVOjlmiIMw34F4YBAA==")
+      format("woff2"),
+    url("//at.alicdn.com/t/c/font_4584313_fusmzse9fk5.woff?t=1718269303207")
+      format("woff"),
+    url("//at.alicdn.com/t/c/font_4584313_fusmzse9fk5.ttf?t=1718269303207")
+      format("truetype");
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 * {
   padding: 0;
   margin: 0;

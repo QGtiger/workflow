@@ -3,8 +3,8 @@ import { create } from "zustand";
 
 import AuthType from "./components/AuthType";
 import DynamicForm from "./components/DynamicForm";
+import EmailCaptcha from "./components/EmailCaptcha";
 import HttpConfig from "./components/HttpConfig";
-import InputNoSpace from "./components/InputNoSpace";
 import InputWithCopy from "./components/InputWithCopy";
 import MethodUrl from "./components/MethodUrl";
 import TableEditor from "./components/TableEditor";
@@ -25,7 +25,7 @@ export const useFormStore = create<{
 }>((set) => ({
   formValue: {},
   fieldComponentMap: {
-    Input: InputNoSpace,
+    Input,
     Textarea: Input.TextArea,
     InputNumber: InputNumber,
     Select: Select,
@@ -38,6 +38,7 @@ export const useFormStore = create<{
     HttpConfig,
     AuthType,
     TableEditor,
+    EmailCaptcha,
   },
   onFileUpload(file) {
     return new Promise((resolve, reject) => {

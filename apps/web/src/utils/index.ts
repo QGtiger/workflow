@@ -21,3 +21,24 @@ export function throttle<T extends (...args: any[]) => any>(
     }
   };
 }
+
+// 简单的一个非空校验
+export function requiredValidator(name: string) {
+  return function (v: any) {
+    if (!v) {
+      return `${name}不能为空`;
+    }
+  };
+}
+
+// 简单的一个函数组合
+export function composeValidator<T>(...fns: ((v: T) => any)[]) {
+  return function (v: T) {
+    for (const fn of fns) {
+      const result = fn(v);
+      if (result) {
+        return result;
+      }
+    }
+  };
+}

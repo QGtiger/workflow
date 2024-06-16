@@ -1,3 +1,4 @@
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, FormInstance } from "antd";
 import { useRef } from "react";
 
@@ -8,25 +9,26 @@ export default function Login() {
 
   return (
     <div className="flex h-[100vh] items-center justify-center">
-      <div className="w-[500px]">
+      <div className="w-[500px] mt-[-200px]">
+        <i className="!text-[100px] iconfont ">&#xe789;</i>
         <SchemaForm
           ref={formRef}
           schema={[
             {
               name: "username",
-              label: "用户名",
               type: "Input",
               config: {
                 placeholder: "请输入用户名",
+                prefix: <UserOutlined />,
               },
             },
             {
               name: "password",
-              label: "密码",
               type: "Input",
               config: {
                 type: "password",
                 placeholder: "请输入密码",
+                prefix: <LockOutlined />,
               },
             },
           ]}

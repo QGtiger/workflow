@@ -69,3 +69,11 @@ pnpm add eslint-plugin-import -D
 ```
 
 这样，当你保存文件时，VS Code 就会自动修复 ESLint 的错误，包括 import 的顺序
+
+## CI/CD
+
+### github actions 配置
+
+[docs](https://turbo.build/repo/docs/guides/ci-vendors/github-actions)
+
+## 后端技术方案

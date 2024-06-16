@@ -11,7 +11,8 @@ export type DynamicFormFieldsType =
   | "MethodUrl"
   | "HttpConfig"
   | "AuthType"
-  | "TableEditor";
+  | "TableEditor"
+  | "EmailCaptcha";
 
 type BaseDynamicPayload = FormSchema;
 
