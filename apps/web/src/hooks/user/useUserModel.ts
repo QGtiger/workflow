@@ -22,7 +22,7 @@ export default function useUserModel() {
   const getUserInfoSync = () => {
     if (userInfo) return userInfo;
     if (queryRef.queryStatus === "success") return queryRef.result;
-    if (queryRef.queryStatus === "error") return queryRef.result;
+    if (queryRef.queryStatus === "error") throw queryRef.result;
     if (queryRef.queryStatus === "init") {
       queryRef.queryStatus = "loading";
       queryRef.queryPromise = getUserInfoAPI()

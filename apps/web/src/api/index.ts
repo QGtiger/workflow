@@ -43,7 +43,7 @@ client.interceptors.response.use(
   (error) => {
     createMessage({
       type: "error",
-      content: error.response?.data?.message || "接口异常",
+      content: "接口异常",
     });
     return Promise.reject(error);
   }

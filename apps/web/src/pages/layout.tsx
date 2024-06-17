@@ -1,7 +1,9 @@
 import { message, Modal } from "antd";
 import { Suspense, useEffect } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { useLocation, useOutlet } from "react-router-dom";
 
+import CommonErrorBoundaryPanel from "@/components/CommonErrorBoundaryPanel";
 import FullScreenSpin from "@/components/FullScreenSpin";
 import { MessageRef } from "@/utils/customMessage";
 import { ModalRef } from "@/utils/customModal";
@@ -26,12 +28,12 @@ export default function Layout() {
   }, [modal, messageApi]);
 
   return (
-    <Suspense fallback={<FullScreenSpin />}>
-      <div className="root-wrapper">
-        {outlet}
-        {contextHolder}
-        {messageContextHolder}
-      </div>
-    </Suspense>
+    <ErrorBoundary FallbackComponent={CommonErrorBoundaryPanel}>
+      <Suspense fallback={<FullScreenSpin />}>
+        <div className="root-wrapper">{outlet}</div>
+      </Suspense>
+      {contextHolder}
+      {messageContextHolder}
+    </ErrorBoundary>
   );
 }
