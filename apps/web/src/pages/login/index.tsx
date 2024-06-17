@@ -1,11 +1,17 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { useMutation } from "@tanstack/react-query";
 import { Button, FormInstance } from "antd";
 import { useRef } from "react";
 
+import { login } from "@/api/user/register";
 import { SchemaForm } from "@/components/SchemaForm";
 
 export default function Login() {
   const formRef = useRef<FormInstance>(null);
+
+  const { mutateAsync: loginMutateAsync, isPending } = useMutation({
+    mutationFn: login,
+  });
 
   return (
     <div className="flex h-[100vh] items-center justify-center">
@@ -33,7 +39,16 @@ export default function Login() {
             },
           ]}
         />
-        <Button type="primary" block>
+        <Button
+          loading={isPending}
+          type="primary"
+          block
+          onClick={() => {
+            return formRef.current?.validateFields().then(async (values) => {
+              await loginMutateAsync(values);
+            });
+          }}
+        >
           登陆
         </Button>
       </div>

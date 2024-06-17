@@ -77,3 +77,7 @@ pnpm add eslint-plugin-import -D
 [docs](https://turbo.build/repo/docs/guides/ci-vendors/github-actions)
 
 ## 后端技术方案
+
+RBAC（Role Based Access Control），基于角色的权限控制。
+
+JWT

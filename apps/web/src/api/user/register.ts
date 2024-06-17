@@ -20,3 +20,11 @@ export function register(params: {
     data: params,
   });
 }
+
+export function login(params: { username: string; password: string }) {
+  return request({
+    url: "/user/login",
+    method: "post",
+    data: params,
+  });
+}
