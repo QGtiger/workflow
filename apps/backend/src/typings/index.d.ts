@@ -20,5 +20,8 @@ declare module 'express' {
     headers: {
       authorization: `Bearer ${string}`;
     };
+    ip: string;
+    method: string;
+    path: string;
   }
 }

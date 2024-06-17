@@ -40,7 +40,7 @@ import { JwtModule } from '@nestjs/jwt';
           password: configService.get('MYSQL_SERVER_PASSWORD'),
           database: configService.get('MYSQL_SERVER_DB'),
           synchronize: true,
-          logging: true,
+          logging: false,
           entities: [User, Role, Permission],
           poolSize: 10,
           connectorPackage: 'mysql2',
