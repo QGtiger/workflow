@@ -3,11 +3,16 @@ import { useMutation } from "@tanstack/react-query";
 import { Button, FormInstance } from "antd";
 import { useRef } from "react";
 
-import { login } from "@/api/user/register";
+import { login } from "@/api/user";
 import { SchemaForm } from "@/components/SchemaForm";
+import useUserModel from "@/hooks/user/useUserModel";
+import useRouter from "@/hooks/useRouter";
+import { createMessage } from "@/utils/customMessage";
 
 export default function Login() {
   const formRef = useRef<FormInstance>(null);
+  const { nav } = useRouter();
+  const { userLoginAfter } = useUserModel();
 
   const { mutateAsync: loginMutateAsync, isPending } = useMutation({
     mutationFn: login,
@@ -45,7 +50,12 @@ export default function Login() {
           block
           onClick={() => {
             return formRef.current?.validateFields().then(async (values) => {
-              await loginMutateAsync(values);
+              userLoginAfter(await loginMutateAsync(values));
+              createMessage({
+                type: "success",
+                content: "登陆成功",
+              });
+              nav("/console");
             });
           }}
         >

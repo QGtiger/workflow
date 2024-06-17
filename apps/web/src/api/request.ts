@@ -2,9 +2,9 @@ import { AxiosRequestConfig } from "axios";
 
 import { client } from ".";
 
-export const request = async <T = any, isPage = false>(
+export const request = async <T = any>(
   options: AxiosRequestConfig
-): Promise<isPage extends true ? PageResponse<T> : BaseResponse<T>> => {
+): Promise<T> => {
   return client(options);
 };
 

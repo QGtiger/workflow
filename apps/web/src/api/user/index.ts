@@ -22,9 +22,16 @@ export function register(params: {
 }
 
 export function login(params: { username: string; password: string }) {
-  return request({
+  return request<UserLoginRes>({
     url: "/user/login",
     method: "post",
     data: params,
+  });
+}
+
+export function getUserInfoAPI() {
+  return request<UserInfo>({
+    url: "/user/getUserInfo",
+    method: "get",
   });
 }

@@ -1,7 +1,11 @@
-import { message } from "antd";
 import axios from "axios";
 
-import { ACCESS_TOKEN_KEY, API_BASE_URL } from "@/constants/api";
+import {
+  ACCESS_TOKEN_KEY,
+  API_BASE_URL,
+  REFRESH_TOKEN_KEY,
+} from "@/constants/api";
+import { createMessage } from "@/utils/customMessage";
 
 export const client = axios.create({
   baseURL: API_BASE_URL,
@@ -18,18 +22,29 @@ client.interceptors.response.use(
   (res) => {
     const responseData = res.data;
     if (!responseData.success) {
-      message.error(responseData.message || "接口异常");
+      createMessage({
+        type: "error",
+        content: responseData.message || "接口异常",
+      });
+
+      if (responseData.code === 401) {
+        localStorage.removeItem(ACCESS_TOKEN_KEY);
+        localStorage.removeItem(REFRESH_TOKEN_KEY);
+        // 401 未登录
+        // 重定向到登录页
+        window.location.replace("/login");
+      }
+
       return Promise.reject(responseData);
     }
-    // 登录成功后保存token
-    // if (res.config.url === '/login') {
-    //   localStorage.setItem(ACCESS_TOKEN_KET, res.data.access_token)
-    // }
     // 统一后端网关处理
-    return res.data;
+    return responseData.data;
   },
   (error) => {
-    message.error("接口异常");
+    createMessage({
+      type: "error",
+      content: error.response?.data?.message || "接口异常",
+    });
     return Promise.reject(error);
   }
 );

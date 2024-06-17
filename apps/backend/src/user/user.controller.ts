@@ -6,11 +6,14 @@ import {
   Post,
   Query,
   UnauthorizedException,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { RegisterUserDto } from './dto/RegisterUserDto';
 import { LoginUserDto } from './dto/LoginUserDto';
 import { JwtService } from '@nestjs/jwt';
+import { RequireLogin, UserInfo } from 'src/common/custom.decorator';
+import { LoginGuard } from 'src/login.guard';
 
 @Controller('user')
 export class UserController {
@@ -44,6 +47,13 @@ export class UserController {
     } catch (e) {
       throw new UnauthorizedException('refreshToken 无效');
     }
+  }
+
+  @Get('getUserInfo')
+  @RequireLogin()
+  @UseGuards(LoginGuard)
+  async getUserInfo(@UserInfo() userInfo) {
+    return userInfo;
   }
 
   @Get('initdata')

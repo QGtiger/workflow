@@ -15,7 +15,9 @@ export class CommonFilter implements ExceptionFilter {
 
     const errorResponse = {
       success: false,
-      message: res.message?.join ? res.message.join(', ') : res.message,
+      message: res.message?.join
+        ? res.message.join(', ')
+        : res.message || exception.message,
       code: exception.getStatus(),
     };
 

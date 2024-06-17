@@ -1,8 +1,13 @@
-export default function Home() {
-  // TODO 已登录的情况下，跳转到 /dashboard
-  return (
-    <div>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    </div>
-  );
+import { useMount } from "ahooks";
+
+import useRouter from "@/hooks/useRouter";
+
+function Home() {
+  const { nav } = useRouter();
+  useMount(() => {
+    nav("/console");
+  });
+  return <div></div>;
 }
+
+export default Home;

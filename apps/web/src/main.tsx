@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ConfigProvider } from "antd";
 import ReactDOM from "react-dom/client";
+import { ErrorBoundary } from "react-error-boundary";
 import {
   createBrowserRouter,
   RouteObject,
@@ -9,6 +10,16 @@ import {
   useOutlet,
 } from "react-router-dom";
 import "./index.css";
+
+// 定义错误发生时的备用 UI
+const FallbackComponent = ({ error }: any) => {
+  return (
+    <div>
+      <p>Something went wrong:</p>
+      <pre>{error.message}</pre>
+    </div>
+  );
+};
 
 const queryClient = new QueryClient({
   defaultOptions: {},
@@ -126,17 +137,19 @@ const routes = initRoutes();
 const router = createBrowserRouter(routes);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <ConfigProvider
-    prefixCls="web-workflow"
-    theme={{
-      token: {
-        colorPrimary: "#4e46dc",
-      },
-    }}
-  >
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-      <ReactQueryDevtools />
-    </QueryClientProvider>
-  </ConfigProvider>
+  <ErrorBoundary FallbackComponent={FallbackComponent}>
+    <ConfigProvider
+      prefixCls="web-workflow"
+      theme={{
+        token: {
+          colorPrimary: "#4e46dc",
+        },
+      }}
+    >
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </ConfigProvider>
+  </ErrorBoundary>
 );

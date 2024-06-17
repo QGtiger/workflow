@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { Button, FormInstance } from "antd";
 import { useRef } from "react";
 
-import { register, sendEmail } from "@/api/user/register";
+import { register, sendEmail } from "@/api/user";
 import { SchemaForm } from "@/components/SchemaForm";
 import { EmailCaptchaProps } from "@/components/SchemaForm/components/EmailCaptcha";
 import { composeValidator, requiredValidator } from "@/utils";
