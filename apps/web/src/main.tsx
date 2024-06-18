@@ -9,6 +9,7 @@ import {
   RouterProvider,
   useOutlet,
 } from "react-router-dom";
+
 import "./index.css";
 
 // 定义错误发生时的备用 UI
@@ -54,7 +55,12 @@ function initRoutes() {
     eager: true,
   });
 
+  const notFoundPage = (import.meta as any).glob("./pages/404.tsx", {
+    eager: true,
+  })["./pages/404.tsx"];
+
   const resultRoutes: RouteObject[] = [];
+
   /**
    * createRoute函数用于创建一个路由对象。
    * 它接收页面URL、布局URL、路径和路由数组作为参数。
@@ -99,6 +105,15 @@ function initRoutes() {
     resultRoutes
   );
 
+  // 404 页面
+  if (notFoundPage) {
+    const NotFoundComp = notFoundPage.default;
+    resultRoutes.push({
+      path: "*",
+      element: <NotFoundComp />,
+    });
+  }
+
   /**
    * dfs函数是一个深度优先搜索函数，用于递归地创建路由。
    * 它接收前缀路径、路径数组和结果路由数组作为参数。
@@ -129,6 +144,7 @@ function initRoutes() {
     .forEach((key) => {
       dfs("./pages", key.split("/").slice(2, -1), rootRoute.children);
     });
+
   return resultRoutes;
 }
 

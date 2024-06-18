@@ -11,6 +11,9 @@ export default {
         "screen-3/4": "75vh",
         screen: "100vh",
       },
+      width: {
+        screen: "100vw",
+      },
     },
   },
   plugins: [],
