@@ -1,4 +1,4 @@
-import { message, Modal } from "antd";
+import { message, Modal, notification } from "antd";
 import { Suspense, useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useLocation, useOutlet } from "react-router-dom";
@@ -7,10 +7,13 @@ import CommonErrorBoundaryPanel from "@/components/CommonErrorBoundaryPanel";
 import FullScreenSpin from "@/components/FullScreenSpin";
 import { MessageRef } from "@/utils/customMessage";
 import { ModalRef } from "@/utils/customModal";
+import { NotificationRef } from "@/utils/customNotification";
 
 export default function Layout() {
   const [modal, contextHolder] = Modal.useModal();
   const [messageApi, messageContextHolder] = message.useMessage();
+  const [notificationApi, notificationContextHolder] =
+    notification.useNotification();
   const outlet = useOutlet();
   const location = useLocation();
 
@@ -25,7 +28,8 @@ export default function Layout() {
     ModalRef.current = modal;
 
     MessageRef.current = messageApi;
-  }, [modal, messageApi]);
+    NotificationRef.current = notificationApi;
+  }, [modal, messageApi, notificationApi]);
 
   return (
     <>
@@ -36,6 +40,7 @@ export default function Layout() {
       </ErrorBoundary>
       {contextHolder}
       {messageContextHolder}
+      {notificationContextHolder}
     </>
   );
 }

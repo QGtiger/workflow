@@ -159,6 +159,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       theme={{
         token: {
           colorPrimary: "#4e46dc",
+          colorLink: "#4e46dc",
         },
       }}
     >

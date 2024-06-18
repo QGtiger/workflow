@@ -1,3 +1,5 @@
+import useRouter from "../useRouter";
+
 import { getUserInfoAPI } from "@/api/user";
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "@/constants/api";
 import { useUserStore } from "@/store/userStore";
@@ -11,11 +13,13 @@ const queryRef = {
 export default function useUserModel() {
   const setUserInfo = useUserStore((state) => state.setUserInfo);
   const userInfo = useUserStore((state) => state.userInfo);
+  const { nav } = useRouter();
 
   const userLoginAfter = (res: UserLoginRes) => {
     setUserInfo(res.userInfo);
     localStorage.setItem(ACCESS_TOKEN_KEY, res.accessToken);
     localStorage.setItem(REFRESH_TOKEN_KEY, res.refreshToken);
+    nav("/console");
   };
 
   // 同步获取用户信息

@@ -168,6 +168,9 @@ export class UserService {
 
     await this.userRepository.save(newUser);
 
-    return newUser;
+    return await this.login({
+      ...newUser,
+      password: user.password,
+    });
   }
 }

@@ -22,16 +22,20 @@ export default function EmailCaptcha(
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const startCountDown = async () => {
-    await sendCaptcha();
-    viewModel.isCountDown = true;
-    viewModel.countDownNum = countDown;
-    timerRef.current = setInterval(() => {
-      viewModel.countDownNum -= 1;
-      if (viewModel.countDownNum <= 0) {
-        clearInterval(timerRef.current!);
-        viewModel.isCountDown = false;
-      }
-    }, 1000);
+    try {
+      viewModel.isCountDown = true;
+      await sendCaptcha();
+      viewModel.countDownNum = countDown;
+      timerRef.current = setInterval(() => {
+        viewModel.countDownNum -= 1;
+        if (viewModel.countDownNum <= 0) {
+          clearInterval(timerRef.current!);
+          viewModel.isCountDown = false;
+        }
+      }, 1000);
+    } catch (error) {
+      viewModel.isCountDown = false;
+    }
   };
 
   useUnmount(() => {
@@ -45,10 +49,10 @@ export default function EmailCaptcha(
         type="primary"
         className="w-[200px]"
         onClick={startCountDown}
-        disabled={viewModel.isCountDown}
+        loading={viewModel.isCountDown}
       >
         {viewModel.isCountDown
-          ? `${viewModel.countDownNum}秒后重新获取`
+          ? `${viewModel.countDownNum}s重新获取`
           : "获取验证码"}
       </Button>
     </Space.Compact>

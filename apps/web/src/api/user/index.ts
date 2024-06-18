@@ -14,7 +14,7 @@ export function register(params: {
   email: string;
   captcha: string;
 }) {
-  return request({
+  return request<UserLoginRes>({
     url: "/user/register",
     method: "post",
     data: params,

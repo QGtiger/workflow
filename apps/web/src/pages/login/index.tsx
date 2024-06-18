@@ -7,12 +7,12 @@ import { login } from "@/api/user";
 import { SchemaForm } from "@/components/SchemaForm";
 import useUserModel from "@/hooks/user/useUserModel";
 import useRouter from "@/hooks/useRouter";
-import { createMessage } from "@/utils/customMessage";
+import { showLoginMessage } from "@/utils/message";
 
 export default function Login() {
   const formRef = useRef<FormInstance>(null);
-  const { nav } = useRouter();
   const { userLoginAfter } = useUserModel();
+  const { nav } = useRouter();
 
   const { mutateAsync: loginMutateAsync, isPending } = useMutation({
     mutationFn: login,
@@ -50,17 +50,25 @@ export default function Login() {
           block
           onClick={() => {
             return formRef.current?.validateFields().then(async (values) => {
-              userLoginAfter(await loginMutateAsync(values));
-              createMessage({
-                type: "success",
-                content: "登陆成功",
-              });
-              nav("/console");
+              const loginRes = await loginMutateAsync(values);
+              userLoginAfter(loginRes);
+              showLoginMessage(loginRes.userInfo);
             });
           }}
         >
           登陆
         </Button>
+        <div className="flex justify-end mt-2">
+          <Button
+            type="link"
+            className="p-0"
+            onClick={() => {
+              nav("/register", { replace: true });
+            }}
+          >
+            还没有账户？去注册
+          </Button>
+        </div>
       </div>
     </div>
   );

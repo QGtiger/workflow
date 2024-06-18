@@ -1,12 +1,11 @@
-import { useMemo } from 'react';
-import { NavigateOptions, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useMemo } from "react";
+import { NavigateOptions, useLocation, useNavigate } from "react-router-dom";
 
 export default function useRouter<S extends { [k: string]: string }>() {
   const location = useLocation();
   const nav = useNavigate();
-  const searchParams = useSearchParams();
 
-  const searchParamsObj: S = useMemo(() => {
+  const searchParams: S = useMemo(() => {
     return Object.fromEntries(new URLSearchParams(location.search)) as S;
   }, [location.search]);
 
@@ -14,12 +13,15 @@ export default function useRouter<S extends { [k: string]: string }>() {
     ...location,
     nav,
     searchParams,
-    searchParamsObj,
     // 通过搜索参数导航
-    navBySearchParam(key: string, value: string, navOptions?: NavigateOptions & { delOther?: boolean }) {
+    navBySearchParam(
+      key: string,
+      value: string,
+      navOptions?: NavigateOptions & { delOther?: boolean }
+    ) {
       let _serach = location.search;
       if (navOptions?.delOther) {
-        _serach = '';
+        _serach = "";
       }
       const search = new URLSearchParams(_serach);
       search.set(key, value);

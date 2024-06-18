@@ -6,10 +6,15 @@ import { useRef } from "react";
 import { register, sendEmail } from "@/api/user";
 import { SchemaForm } from "@/components/SchemaForm";
 import { EmailCaptchaProps } from "@/components/SchemaForm/components/EmailCaptcha";
+import useUserModel from "@/hooks/user/useUserModel";
+import useRouter from "@/hooks/useRouter";
 import { composeValidator, requiredValidator } from "@/utils";
+import { showRegisterMessage } from "@/utils/message";
 
 export default function Register() {
   const formRef = useRef<FormInstance>(null);
+  const { userLoginAfter } = useUserModel();
+  const { nav } = useRouter();
 
   const { mutateAsync: sendEmailMutateAsync } = useMutation({
     mutationKey: ["sendEmail"],
@@ -18,7 +23,12 @@ export default function Register() {
 
   const { mutateAsync: registerMutateAsync } = useMutation({
     mutationKey: ["register"],
-    mutationFn: register,
+    mutationFn: (params: Parameters<typeof register>[0]) => {
+      return register(params).then((res) => {
+        userLoginAfter(res);
+        showRegisterMessage(res.userInfo);
+      });
+    },
   });
 
   return (
@@ -92,11 +102,26 @@ export default function Register() {
           type="primary"
           block
           onClick={() => {
-            registerMutateAsync(formRef.current?.getFieldsValue());
+            formRef.current?.validateFields().then((values) => {
+              registerMutateAsync(values);
+            });
           }}
         >
           注册
         </Button>
+        <div className="flex justify-end mt-2">
+          <Button
+            type="link"
+            className="p-0"
+            onClick={() => {
+              nav("/login", {
+                replace: true,
+              });
+            }}
+          >
+            已有账户？去登陆
+          </Button>
+        </div>
       </div>
     </div>
   );
