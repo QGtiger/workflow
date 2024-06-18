@@ -28,12 +28,14 @@ export default function Layout() {
   }, [modal, messageApi]);
 
   return (
-    <ErrorBoundary FallbackComponent={CommonErrorBoundaryPanel}>
-      <Suspense fallback={<FullScreenSpin />}>
-        <div className="root-wrapper">{outlet}</div>
-      </Suspense>
+    <>
+      <ErrorBoundary FallbackComponent={CommonErrorBoundaryPanel}>
+        <Suspense fallback={<FullScreenSpin />}>
+          <div className="root-wrapper">{outlet}</div>
+        </Suspense>
+      </ErrorBoundary>
       {contextHolder}
       {messageContextHolder}
-    </ErrorBoundary>
+    </>
   );
 }

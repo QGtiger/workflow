@@ -7,16 +7,19 @@ export default function LeftMenu() {
   return (
     <div className="flex flex-col flex-1 p-6 h-full justify-between">
       <div className="flex justify-between w-full">
-        <Avatar
-          style={{
-            background: "#f56a00",
-            verticalAlign: "middle",
-          }}
-          size="large"
-          gap={7}
-        >
-          {userInfo?.username?.slice(0, 1)}
-        </Avatar>
+        <div className="flex items-center gap-2">
+          <Avatar
+            style={{
+              background: "#f56a00",
+              verticalAlign: "middle",
+            }}
+            size="large"
+            gap={7}
+          >
+            {userInfo?.username?.slice(0, 1)}
+          </Avatar>
+          {userInfo.username}
+        </div>
       </div>
     </div>
   );

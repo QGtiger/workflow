@@ -1,4 +1,9 @@
 export default function CommonErrorBoundaryPanel(props: any) {
-  console.log(props);
-  return <div>CommonErrorBoundaryPanel</div>;
+  return (
+    <div className=" whitespace-break-spaces">
+      CommonErrorBoundaryPanel:
+      <br />
+      {props.error.stack}
+    </div>
+  );
 }

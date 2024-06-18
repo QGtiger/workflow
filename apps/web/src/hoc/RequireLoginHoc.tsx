@@ -11,7 +11,10 @@ export default function RequireLoginHoc<P>(Component: React.ComponentType<P>) {
     const { getUserInfoSync } = useUserModel();
 
     useMount(() => {
-      !hasLogin && nav("/login");
+      !hasLogin &&
+        nav("/login", {
+          replace: true,
+        });
     });
 
     if (!hasLogin) {
