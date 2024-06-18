@@ -8,7 +8,7 @@ const ConsoleLayout = RequireLoginHoc(function ConsoleLayout() {
   const outlet = useOutlet();
   return (
     <div className="console wrapper !h-[100vh]">
-      <div className="flex flex-row grow h-full">
+      <div className="flex flex-row grow h-full w-full">
         <div
           id="mainMenu"
           className="flex flex-row min-h-[600px] group/mainmenu relative h-screen border-r-[1px] flex-grow-0 flex-shrink-0"
@@ -18,7 +18,7 @@ const ConsoleLayout = RequireLoginHoc(function ConsoleLayout() {
         >
           <LeftMenu />
         </div>
-        <div className="page-container">{outlet}</div>
+        <div className="page-container w-[200px] flex-1">{outlet}</div>
       </div>
     </div>
   );
