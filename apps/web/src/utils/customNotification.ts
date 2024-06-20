@@ -8,7 +8,10 @@ export const NotificationRef = {
 };
 
 export function createNotification(args: ArgsProps) {
-  return NotificationRef.current.open(args);
+  return NotificationRef.current.open({
+    ...args,
+    placement: "bottomRight",
+  });
 }
 
 export function createSucNotification(args: ArgsProps) {

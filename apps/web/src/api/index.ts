@@ -7,7 +7,7 @@ import {
   API_BASE_URL,
   REFRESH_TOKEN_KEY,
 } from "@/constants/api";
-import { createMessage } from "@/utils/customMessage";
+import { createNotification } from "@/utils/customNotification";
 
 export const client = axios.create({
   baseURL: API_BASE_URL,
@@ -64,9 +64,10 @@ client.interceptors.response.use(
         }
 
         // 401 并且 refreshToken 过期， 或者不存在
-        createMessage({
+        createNotification({
           type: "error",
-          content: responseData.message || "接口异常",
+          message: "接口异常",
+          description: responseData.message || "未知异常",
         });
 
         localStorage.removeItem(ACCESS_TOKEN_KEY);
@@ -75,9 +76,10 @@ client.interceptors.response.use(
         // 重定向到登录页
         // window.location.replace("/login");
       } else {
-        createMessage({
+        createNotification({
           type: "error",
-          content: responseData.message || "接口异常",
+          message: "接口异常",
+          description: responseData.message || "未知异常",
         });
       }
 
@@ -87,9 +89,10 @@ client.interceptors.response.use(
     return responseData.data;
   },
   (error) => {
-    createMessage({
+    createNotification({
       type: "error",
-      content: "接口异常",
+      message: "接口异常",
+      description: error.message || "未知异常",
     });
     return Promise.reject(error);
   }

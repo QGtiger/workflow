@@ -29,3 +29,33 @@
   box-sizing: border-box;
   font-family: Untitled, Helvetica, sans-serif !important;
 }
+
+.text-micro {
+  font-size: 0.6875rem !important;
+  font-weight: 400 !important;
+  line-height: 0.75rem !important;
+}
+
+.lineClamp2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* Change this number to the desired number of lines */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lineClamp1 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; /* Change this number to the desired number of lines */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.workflow-form-vertical .workflow-form-item-label {
+  padding-bottom: 2px !important;
+}
+
+.workflow-modal-confirm-paragraph {
+  max-width: 100% !important;
+}

@@ -19,12 +19,10 @@ export function createModal(config: ModalFuncProps) {
   return ins;
 }
 
-export const createSchemaFormModal = throttle(function <
-  T extends Record<string, any>,
->(config: {
+export const createSchemaFormModal = throttle(function (config: {
   title: string;
   schema: FormSchema[];
-  onFinished: (values: T) => Promise<any>;
+  onFinished: (values: any) => Promise<any>;
   schemaFormProps?: Partial<Parameters<typeof SchemaForm>[0]>;
 }) {
   const formRef = createRef<FormInstance>();
@@ -45,7 +43,7 @@ export const createSchemaFormModal = throttle(function <
     onOk: () => {
       return new Promise((resolve, reject) => {
         formRef.current?.validateFields().then(async (v) => {
-          resolve(await config.onFinished(v as T).catch(reject));
+          resolve(await config.onFinished(v).catch(reject));
         }, reject);
       });
     },

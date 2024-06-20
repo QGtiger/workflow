@@ -21,6 +21,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/User';
 import { v4 as uuidV4 } from 'uuid';
 import { EditApiDto } from './dto/EditApiDto';
+import { DeleteApiDto } from './dto/DeleteApiDto';
 
 @RequireLogin()
 @UseGuards(LoginGuard)
@@ -57,14 +58,14 @@ export class ApiController {
       parentUid: parentUid || 'root',
       uid: uuidV4(),
     });
-    this.apiMetaRepository.save(newItem);
+    await this.apiMetaRepository.save(newItem);
     return '添加成功';
   }
 
   @Post('delete')
-  async deleteApi(@Query('uid') uid: string, @UserInfo('id') id) {
+  async deleteApi(@Body() dto: DeleteApiDto, @UserInfo('id') id) {
     const item = await this.apiMetaRepository.findOneBy({
-      uid,
+      uid: dto.uid,
       user: {
         id,
       },
@@ -124,7 +125,7 @@ export class ApiController {
     return '更新成功';
   }
 
-  @Get('folders')
+  @Get('query')
   async getFolders(@Query('parentUid') parentUid: string, @UserInfo('id') id) {
     const _parentUid = parentUid || 'root';
 

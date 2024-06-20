@@ -14,6 +14,10 @@ export default {
       width: {
         screen: "100vw",
       },
+      textColor: {
+        labelFaint: "#9CA3AF",
+        labelMuted: "#6b7076",
+      },
     },
   },
   plugins: [],

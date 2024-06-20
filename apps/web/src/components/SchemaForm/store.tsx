@@ -26,7 +26,16 @@ export const useFormStore = create<{
   formValue: {},
   fieldComponentMap: {
     Input,
-    Textarea: Input.TextArea,
+    Textarea: (props: any) => {
+      return (
+        <Input.TextArea
+          autoSize={{
+            minRows: 4,
+          }}
+          {...props}
+        />
+      );
+    },
     InputNumber: InputNumber,
     Select: Select,
     Upload: Upload,

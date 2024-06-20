@@ -155,7 +155,7 @@ const router = createBrowserRouter(routes);
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <ErrorBoundary FallbackComponent={FallbackComponent}>
     <ConfigProvider
-      prefixCls="web-workflow"
+      prefixCls="workflow"
       theme={{
         token: {
           colorPrimary: "#4e46dc",
