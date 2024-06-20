@@ -15,3 +15,14 @@
 之后使用 LoginGuard、PermissionGuard 来做登录和权限的鉴权，根据 handler 上的 metadata 来确定要不要做鉴权、需要什么权限。
 
 我们还封装了几个自定义装饰器，用于方便的设置 metadata，从 request 取数据注入 handler。
+
+# 6.18
+
+API, Function, Workflow 都可以对 item 进行文件式分类，方便后续管理
+
+### 数据模型设计
+
+- 1. 文件源数据: 存储 item 基本信息，如创建时间， 修改时间，类型等等。
+- 2. 目录结构。 为了支持层级结构，设计目录表来表示文件和文件夹之前的关系。
+- 3. item 内容。
+- 4. （可选）涉及用户和 item 的权限关系。

@@ -7,10 +7,13 @@ import { Permission } from './user/entities/Permission';
 import { RedisModule } from './redis/redis.module';
 import { EmailModule } from './email/email.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { CommonFilter } from './common/common.filter';
 import { CommonInterceptor } from './common/common.interceptor';
 import { JwtModule } from '@nestjs/jwt';
+import { ApiModule } from './api/api.module';
+import { ApiMeta } from './api/entities/ApiMeta';
+import { ApiMetaVersion } from './api/entities/ApiMetaVersion';
 
 @Module({
   imports: [
@@ -37,8 +40,8 @@ import { JwtModule } from '@nestjs/jwt';
           password: configService.get('MYSQL_SERVER_PASSWORD'),
           database: configService.get('MYSQL_SERVER_DB'),
           synchronize: true,
-          logging: false,
-          entities: [User, Role, Permission],
+          logging: true,
+          entities: [User, Role, Permission, ApiMeta, ApiMetaVersion],
           poolSize: 10,
           connectorPackage: 'mysql2',
           extra: {
@@ -51,6 +54,7 @@ import { JwtModule } from '@nestjs/jwt';
     UserModule,
     RedisModule,
     EmailModule,
+    ApiModule,
   ],
   providers: [
     {

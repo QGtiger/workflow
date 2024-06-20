@@ -4,10 +4,12 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Role } from './Role';
+import { ApiMeta } from 'src/api/entities/ApiMeta';
 
 @Entity({
   name: 'users',
@@ -55,4 +57,7 @@ export class User {
     name: 'user_role',
   })
   roles: Role[];
+
+  @OneToMany(() => ApiMeta, (ApiMeta) => ApiMeta.user)
+  apiMetas: ApiMeta[];
 }
