@@ -18,6 +18,9 @@ export default {
         labelFaint: "#9CA3AF",
         labelMuted: "#6b7076",
       },
+      backgroundColor: {
+        controlSelected: "#F3F4F6",
+      },
     },
   },
   plugins: [],

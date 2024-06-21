@@ -22,6 +22,13 @@ export default function useUserModel() {
     nav("/console");
   };
 
+  const userLogout = () => {
+    setUserInfo(null as any);
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
+    localStorage.removeItem(REFRESH_TOKEN_KEY);
+    nav("/login");
+  };
+
   // 同步获取用户信息
   const getUserInfoSync = () => {
     if (userInfo) return userInfo;
@@ -46,6 +53,7 @@ export default function useUserModel() {
 
   return {
     userLoginAfter,
+    userLogout,
     getUserInfoSync,
     get userInfo() {
       return getUserInfoSync();

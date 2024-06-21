@@ -14,7 +14,11 @@ export const ModalRef = {
 
 export function createModal(config: ModalFuncProps) {
   // 路由拦截，不让跳转
-  const ins = ModalRef.current.confirm(config);
+  const ins = ModalRef.current.confirm({
+    okText: "确定",
+    cancelText: "取消",
+    ...config,
+  });
   ModalRef.modalInsList.push(ins);
   return ins;
 }
@@ -47,6 +51,8 @@ export const createSchemaFormModal = throttle(function (config: {
         }, reject);
       });
     },
+    okText: "确定",
+    cancelText: "取消",
   });
   ModalRef.modalInsList.push(ins);
   return ins;
