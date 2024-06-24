@@ -1,5 +1,12 @@
 import { request } from "../request";
 
+export function queryAllApiMetaApi() {
+  return request<ApiMetaInfo[]>({
+    url: "/api/queryAll",
+    method: "get",
+  });
+}
+
 export function queryApiMetaApi(params: { parentUid?: string }) {
   return request<ApiMetaInfo[]>({
     url: "/api/query",

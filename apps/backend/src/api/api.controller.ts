@@ -171,4 +171,23 @@ export class ApiController {
       };
     });
   }
+
+  @Get('queryAll')
+  async queryAll(@UserInfo('id') id) {
+    const list = await this.apiMetaRepository.find({
+      where: {
+        user: {
+          id,
+        },
+      },
+    });
+
+    return list.map((item) => {
+      return {
+        ...item,
+        createTime: item.createTime.getTime(),
+        updateTime: item.updateTime.getTime(),
+      };
+    });
+  }
 }

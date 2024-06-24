@@ -4,13 +4,14 @@ import { useRef } from "react";
 import {
   addApiMetaApi,
   deleteApiMetaApi,
-  queryApiMetaApi,
+  queryAllApiMetaApi,
+  updateApiMetaApi,
 } from "@/api/apiMeta";
 import { createCustomModel } from "@/common/createModel";
+import { FOLDER_ROOT_KEY } from "@/constants";
 import useRouter from "@/hooks/useRouter";
 
 type ApiMetaMap = Record<string, ApiMetaInfo>;
-type ApiMetaListMap = Record<string, ApiMetaInfo[]>;
 
 const ApiMetaModel = createCustomModel(() => {
   const { searchParams } = useRouter<{
@@ -19,37 +20,43 @@ const ApiMetaModel = createCustomModel(() => {
   const viewModelRef = useRef({
     // 所有文件夹的映射
     floatingFolderMap: {} as ApiMetaMap,
-    // 用于存储当前目录下的所有子目录
-    folderMap: {} as ApiMetaListMap,
   });
 
-  const { floatingFolderMap, folderMap } = viewModelRef.current;
-  const { f } = searchParams;
+  const { floatingFolderMap } = viewModelRef.current;
+  const { f = FOLDER_ROOT_KEY } = searchParams;
 
-  const {
-    isFetching,
-    data: currFolderList,
-    refetch,
-  } = useQuery({
-    queryKey: ["apiMeta", f],
-    queryFn: async () => {
-      if (folderMap[f]) {
-        return folderMap[f];
-      }
-      return queryApiMetaApi({
-        parentUid: f,
-      }).then((res) => {
+  const { isFetching, refetch } = useQuery({
+    queryKey: ["queryAllApiMeta"],
+    queryFn: () => {
+      return queryAllApiMetaApi().then((res) => {
         res.reduce((acc, cur) => {
           acc[cur.uid] = cur;
           return acc;
         }, floatingFolderMap);
-        return (folderMap[f] = res);
+
+        floatingFolderMap[FOLDER_ROOT_KEY] = {
+          name: "根目录",
+          uid: FOLDER_ROOT_KEY,
+          children: [],
+        } as any;
+
+        for (const item of res) {
+          const _parentUid = item.parentUid || FOLDER_ROOT_KEY;
+          let _children = floatingFolderMap[_parentUid].children;
+          if (!_children) {
+            _children = floatingFolderMap[_parentUid].children = [];
+          }
+          _children.push(item);
+        }
+
+        console.log(`=============floatingFolderMap:=====================`);
+        console.log(floatingFolderMap);
+        return res;
       });
     },
   });
 
   const refetchAsync = () => {
-    delete folderMap[f];
     refetch();
   };
 
@@ -71,14 +78,21 @@ const ApiMetaModel = createCustomModel(() => {
     onSuccess: refetchAsync,
   });
 
+  const { mutateAsync: updateApiMeta } = useMutation({
+    mutationKey: ["updateApiMeta", f],
+    mutationFn: updateApiMetaApi,
+    onSuccess: refetchAsync,
+  });
+
   return {
     isLoading: isFetching,
-    currFolderList,
+    currFolderList: floatingFolderMap[f]?.children || [],
     floatingFolderMap,
     refetchAsync,
-    isRoot: f === "root" || !f,
+    isRoot: f === FOLDER_ROOT_KEY || !f,
     deleteApiMeta,
     addApiMeta,
+    updateApiMeta,
   };
 });
 

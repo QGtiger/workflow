@@ -1,10 +1,13 @@
 import { Breadcrumb } from "antd";
 import { useMemo } from "react";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
-import FolderItem from "./components/FolderItem";
+import FolderItem, { LastItem } from "./components/FolderItem";
 
 import AddFolderBtn from "@/components/AddFolderBtn";
 import EmptyFolder from "@/components/EmptyFolder";
+import { FOLDER_ROOT_KEY } from "@/constants";
 import useRouter from "@/hooks/useRouter";
 import ApiMetaModel from "@/models/apiMetaModel";
 
@@ -12,25 +15,24 @@ export default function API() {
   const { currFolderList, addApiMeta, isRoot, floatingFolderMap } =
     ApiMetaModel.useModel();
   const {
-    searchParams: { f },
+    searchParams: { f = FOLDER_ROOT_KEY },
     navBySearchParam,
   } = useRouter<{ f: string }>();
 
   const breadCreubList = useMemo(() => {
-    let fword: string | undefined = f;
+    let fword: string = f;
     let last;
     const origin = [] as any[];
-    while (fword && (last = floatingFolderMap[fword])) {
+    while ((last = floatingFolderMap[fword])) {
       origin.unshift({
         title: last.name,
         key: last.uid,
       });
+      if (!last.parentUid) {
+        break;
+      }
       fword = last.parentUid;
     }
-    origin.unshift({
-      title: "Root",
-      key: "",
-    });
     return origin.map((it) => {
       return {
         title: (
@@ -72,12 +74,21 @@ export default function API() {
               <div className="text-micro text-labelFaint w-60">Description</div>
               <div className="text-micro text-labelFaint w-10 mr-3"> </div>
             </div>
-            <div className="mt-1.5">
-              {f && <FolderItem isGoBack />}
-              {currFolderList?.map((item) => {
-                return <FolderItem key={item.uid} item={item} />;
-              })}
-            </div>
+            <DndProvider backend={HTML5Backend}>
+              <div className="mt-1.5">
+                {!isRoot && (
+                  <LastItem
+                    parentUid={
+                      floatingFolderMap[f]?.parentUid || FOLDER_ROOT_KEY
+                    }
+                  />
+                )}
+                {currFolderList?.map((item) => {
+                  return <FolderItem key={item.uid} item={item} />;
+                })}
+              </div>
+              {/* <DragLayer /> */}
+            </DndProvider>
             <div className="border-t border-bg"></div>
           </div>
         )}
