@@ -49,6 +49,23 @@ export class ApiController {
       }
     }
 
+    const t = await this.apiMetaRepository.exists({
+      where: {
+        name: dto.name,
+        user: {
+          id,
+        },
+        parentUid: parentUid || 'root',
+      },
+    });
+
+    if (t) {
+      throw new HttpException(
+        '同一文件夹下, 名称不能重复',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     const newItem = this.apiMetaRepository.create({
       ...dto,
       user: {
