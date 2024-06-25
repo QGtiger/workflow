@@ -11,9 +11,10 @@ import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 
 import StopPropagationDiv from "@/components/StopPropagationDiv";
+import { ADD_API_SCHEMA, ADD_FOLDER_SCHEMA } from "@/constants/schema";
 import useRouter from "@/hooks/useRouter";
 import ApiMetaModel from "@/models/apiMetaModel";
-import { createModal } from "@/utils/customModal";
+import { createModal, createSchemaFormModal } from "@/utils/customModal";
 import { createNotification } from "@/utils/customNotification";
 
 export function LastItem({ parent }: { parent: ApiMetaInfo }) {
@@ -159,7 +160,30 @@ export default function FolderItem({ item }: { item: ApiMetaInfo }) {
                     });
                   },
                 },
+                {
+                  key: "edit",
+                  label: "编辑",
+                  onClick() {
+                    createSchemaFormModal({
+                      title: "编辑信息",
+                      schema: item.isDir ? ADD_FOLDER_SCHEMA : ADD_API_SCHEMA,
+                      async onFinished(values) {
+                        return updateApiMeta({
+                          uid: item.uid,
+                          ...values,
+                        });
+                      },
+                      initialValues: {
+                        name: item.name,
+                        description: item.description,
+                      },
+                    });
+                  },
+                },
               ],
+            }}
+            overlayStyle={{
+              width: "200px",
             }}
           >
             <MoreOutlined className=" hover:bg-[#e4ebfd] rounded p-1" />

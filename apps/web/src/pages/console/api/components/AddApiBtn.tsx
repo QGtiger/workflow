@@ -1,7 +1,7 @@
 import { Button } from "antd";
 
+import { ADD_API_SCHEMA } from "@/constants/schema";
 import ApiMetaModel from "@/models/apiMetaModel";
-import { requiredValidator } from "@/utils";
 import { createSchemaFormModal } from "@/utils/customModal";
 import { createNotification } from "@/utils/customNotification";
 
@@ -15,22 +15,7 @@ export default function AddApiBtn() {
       onClick={() => {
         createSchemaFormModal({
           title: "添加API",
-          schema: [
-            {
-              name: "name",
-              label: "API名称",
-              description: "请输入API名称",
-              type: "Input",
-              valadator: requiredValidator("API名称"),
-            },
-            {
-              name: "description",
-              label: "API描述",
-              description: "请输入API描述",
-              type: "Textarea",
-              valadator: requiredValidator("API描述"),
-            },
-          ],
+          schema: ADD_API_SCHEMA,
           onFinished(value: { name: string; description: string }) {
             return addApiMeta({
               ...value,

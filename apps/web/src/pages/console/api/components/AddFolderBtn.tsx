@@ -1,6 +1,6 @@
 import { Button } from "antd";
 
-import { requiredValidator } from "@/utils";
+import { ADD_FOLDER_SCHEMA } from "@/constants/schema";
 import { createSchemaFormModal } from "@/utils/customModal";
 import { createNotification } from "@/utils/customNotification";
 
@@ -17,22 +17,7 @@ export default function AddFolderBtn({
       onClick={() => {
         createSchemaFormModal({
           title: "Add Folder",
-          schema: [
-            {
-              name: "name",
-              label: "文件夹名称",
-              description: "请输文件夹名称",
-              type: "Input",
-              valadator: requiredValidator("文件夹名称"),
-            },
-            {
-              name: "description",
-              label: "文件夹描述",
-              description: "请输文件夹描述",
-              type: "Textarea",
-              valadator: requiredValidator("文件夹描述"),
-            },
-          ],
+          schema: ADD_FOLDER_SCHEMA,
           onFinished(value) {
             return addFolderApi(value).then(() => {
               createNotification({

@@ -28,6 +28,7 @@ export const createSchemaFormModal = throttle(function (config: {
   schema: FormSchema[];
   onFinished: (values: any) => Promise<any>;
   schemaFormProps?: Partial<Parameters<typeof SchemaForm>[0]>;
+  initialValues?: any;
 }) {
   const formRef = createRef<FormInstance>();
   const ins = ModalRef.current.confirm({
@@ -41,6 +42,7 @@ export const createSchemaFormModal = throttle(function (config: {
           layout="vertical"
           ref={formRef}
           schema={config.schema}
+          initialValues={config.initialValues}
         ></SchemaForm>
       </div>
     ),

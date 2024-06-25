@@ -4,9 +4,9 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 import AddApiBtn from "./components/AddApiBtn";
+import AddFolderBtn from "./components/AddFolderBtn";
 import FolderItem, { LastItem } from "./components/FolderItem";
 
-import AddFolderBtn from "@/components/AddFolderBtn";
 import EmptyFolder from "@/components/EmptyFolder";
 import { FOLDER_ROOT_KEY } from "@/constants";
 import useRouter from "@/hooks/useRouter";
