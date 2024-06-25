@@ -19,6 +19,7 @@ export function addApiMetaApi(data: {
   name: string;
   description: string;
   parentUid?: string;
+  isDir?: boolean;
 }) {
   return request({
     url: "/api/add",

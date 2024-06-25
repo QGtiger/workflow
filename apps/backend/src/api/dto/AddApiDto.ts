@@ -12,4 +12,6 @@ export class AddApiDto {
   description: string;
 
   parentUid?: string;
+
+  isDir?: boolean;
 }

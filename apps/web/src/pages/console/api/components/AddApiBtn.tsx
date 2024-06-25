@@ -1,51 +1,52 @@
 import { Button } from "antd";
 
+import ApiMetaModel from "@/models/apiMetaModel";
 import { requiredValidator } from "@/utils";
 import { createSchemaFormModal } from "@/utils/customModal";
 import { createNotification } from "@/utils/customNotification";
 
-export default function AddFolderBtn({
-  addFolderApi,
-}: {
-  addFolderApi: (v: { name: string; description: string }) => Promise<any>;
-}) {
+export default function AddApiBtn() {
+  const { addApiMeta } = ApiMetaModel.useModel();
   return (
     <Button
-      type="default"
+      type="primary"
       size="small"
       className="text-micro"
       onClick={() => {
         createSchemaFormModal({
-          title: "Add Folder",
+          title: "添加API",
           schema: [
             {
               name: "name",
-              label: "文件夹名称",
-              description: "请输文件夹名称",
+              label: "API名称",
+              description: "请输入API名称",
               type: "Input",
-              valadator: requiredValidator("文件夹名称"),
+              valadator: requiredValidator("API名称"),
             },
             {
               name: "description",
-              label: "文件夹描述",
-              description: "请输文件夹描述",
+              label: "API描述",
+              description: "请输入API描述",
               type: "Textarea",
-              valadator: requiredValidator("文件夹描述"),
+              valadator: requiredValidator("API描述"),
             },
           ],
-          onFinished(value) {
-            return addFolderApi(value).then(() => {
+          onFinished(value: { name: string; description: string }) {
+            return addApiMeta({
+              ...value,
+              isDir: false,
+            }).then(() => {
               createNotification({
                 type: "success",
                 message: "添加成功",
-                description: `文件夹 ${value.name} 添加成功`,
+                description: `API ${value.name} 添加成功`,
               });
             });
           },
         });
       }}
     >
-      添加文件夹
+      添加API
     </Button>
   );
 }

@@ -36,9 +36,13 @@ const ApiMetaModel = createCustomModel(() => {
 
         floatingFolderMap[FOLDER_ROOT_KEY] = {
           name: "根目录",
+          description: "根目录",
+          isDir: true,
+          createTime: 0,
+          updateTime: 0,
           uid: FOLDER_ROOT_KEY,
           children: [],
-        } as any;
+        } as ApiMetaInfo;
 
         for (const item of res) {
           const _parentUid = item.parentUid || FOLDER_ROOT_KEY;

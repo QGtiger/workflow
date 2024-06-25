@@ -1,4 +1,5 @@
 import {
+  ApiOutlined,
   FolderFilled,
   FolderOpenFilled,
   MoreOutlined,
@@ -13,8 +14,9 @@ import StopPropagationDiv from "@/components/StopPropagationDiv";
 import useRouter from "@/hooks/useRouter";
 import ApiMetaModel from "@/models/apiMetaModel";
 import { createModal } from "@/utils/customModal";
+import { createNotification } from "@/utils/customNotification";
 
-export function LastItem({ parentUid }: { parentUid: string }) {
+export function LastItem({ parent }: { parent: ApiMetaInfo }) {
   const ref = useRef<HTMLDivElement>(null);
   const { navBySearchParam } = useRouter<{ f: string }>();
   const { updateApiMeta } = ApiMetaModel.useModel();
@@ -24,7 +26,12 @@ export function LastItem({ parentUid }: { parentUid: string }) {
     drop: (it: ApiMetaInfo) => {
       updateApiMeta({
         uid: it.uid,
-        parentUid,
+        parentUid: parent.uid,
+      });
+      createNotification({
+        type: "success",
+        message: "移动成功",
+        description: `成功将 ${it.name} 移动到 ${parent.name}`,
       });
     },
     collect(monitor) {
@@ -42,7 +49,7 @@ export function LastItem({ parentUid }: { parentUid: string }) {
     <div
       ref={ref}
       onClick={() => {
-        navBySearchParam("f", parentUid);
+        navBySearchParam("f", parent.uid);
       }}
       className={classNames(
         "flex cursor-pointer transition-all flex-nowrap justify-between items-center text-xs text-labelMuted border-t border-bg by-5 h-[36px] hover:bg-[#f0f3fa]"
@@ -63,7 +70,7 @@ export function LastItem({ parentUid }: { parentUid: string }) {
 
 export default function FolderItem({ item }: { item: ApiMetaInfo }) {
   const ref = useRef<HTMLDivElement>(null);
-  const { navBySearchParam } = useRouter<{ f: string }>();
+  const { navBySearchParam, nav } = useRouter<{ f: string }>();
   const { deleteApiMeta, updateApiMeta } = ApiMetaModel.useModel();
 
   const [{ isDragging }, drag] = useDrag({
@@ -84,6 +91,11 @@ export default function FolderItem({ item }: { item: ApiMetaInfo }) {
         uid: it.uid,
         parentUid: item.uid,
       });
+      createNotification({
+        type: "success",
+        message: "移动成功",
+        description: `成功将 ${it.name} 移动到 ${item.name}`,
+      });
     },
     collect(monitor) {
       return {
@@ -94,7 +106,7 @@ export default function FolderItem({ item }: { item: ApiMetaInfo }) {
 
   useMount(() => {
     drag(ref);
-    drop(ref);
+    item.isDir && drop(ref);
     // dragPreview(getEmptyImage());
   });
 
@@ -102,7 +114,11 @@ export default function FolderItem({ item }: { item: ApiMetaInfo }) {
     <div
       ref={ref}
       onClick={() => {
-        navBySearchParam("f", item.uid);
+        item.isDir
+          ? navBySearchParam("f", item.uid)
+          : nav({
+              pathname: `/console/api/${item.uid}`,
+            });
       }}
       className={classNames(
         "flex cursor-pointer transition-all flex-nowrap justify-between items-center text-xs text-labelMuted border-t border-bg by-5 h-[36px] hover:bg-[#f0f3fa]",
@@ -115,7 +131,7 @@ export default function FolderItem({ item }: { item: ApiMetaInfo }) {
       }}
     >
       <div className="ml-5 w-96 lineClamp1">
-        <FolderFilled />
+        {item.isDir ? <FolderFilled /> : <ApiOutlined />}
         <span className="ml-2">{item.name}</span>
       </div>
       <div className="w-60 lineClamp1">

@@ -11,9 +11,11 @@ export default function MenuItem({
   };
 }) {
   const { path, name, icon } = config;
-  const isMatch = useMatch(path);
-  const location = useLocation();
+  const isExtraMatch = useMatch(path);
   const nav = useNavigate();
+  const pathname = useLocation().pathname;
+
+  const isMatch = pathname.startsWith(path) || isExtraMatch;
 
   return (
     <div

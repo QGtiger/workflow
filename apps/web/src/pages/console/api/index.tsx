@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
+import AddApiBtn from "./components/AddApiBtn";
 import FolderItem, { LastItem } from "./components/FolderItem";
 
 import AddFolderBtn from "@/components/AddFolderBtn";
@@ -57,8 +58,9 @@ export default function API() {
         <div>
           <Breadcrumb items={breadCreubList} className=" text-labelFaint" />
         </div>
-        <div>
+        <div className="flex gap-2">
           <AddFolderBtn addFolderApi={addApiMeta} />
+          <AddApiBtn />
         </div>
       </div>
 
@@ -78,8 +80,10 @@ export default function API() {
               <div className="mt-1.5">
                 {!isRoot && (
                   <LastItem
-                    parentUid={
-                      floatingFolderMap[f]?.parentUid || FOLDER_ROOT_KEY
+                    parent={
+                      floatingFolderMap[
+                        floatingFolderMap[f]?.parentUid || FOLDER_ROOT_KEY
+                      ]
                     }
                   />
                 )}
